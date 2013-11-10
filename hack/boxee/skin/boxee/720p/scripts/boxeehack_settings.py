@@ -2,6 +2,7 @@ import os
 import xbmc, xbmcgui, mc
 import ConfigParser
 import common
+import re
 
 available_providers = ['Addic7ed', 'BierDopje', 'OpenSubtitles', 'SubsWiki', 'Subtitulos', 'Undertexter']
 
@@ -409,16 +410,44 @@ def shutdown():
     os.system("poweroff")
 
 # Calls XBMC Launch script
-def launch-xbmc():
+def launch_xbmc():
 	# Should perform check for xbmc.bin
 	os.system("sh /data/hack/checkxbmc.sh")
 	# If it gets this far, then XBMC does not exist on the external media
 	dialog.ok("XMBC is not found on your External Media!")
 
-# Changes /data/hack/boot.sh to enable or disable checkxbmc.sh	
-def toggle-boot-to-xbmc():
-	
+# Reads /data/hack/boot.sh to see if the checkxbmc.sh line is commented out
+def get_boot_to_xbmc_enabled()
+	bootenabled = common.file_get_contents("/data/etc/.boot_to_xbmc_enabled")
+	if bootenabled == "":
+		bootenabled = "1"
+	return bootenabled	
+#	if '#sh /data/hack/checkxbmc.sh &' in open('/data/hack/boot.sh').read():
+#		return "0"
+#	else:
+#		return "1"
 
+# Changes /data/hack/boot.sh to enable or disable checkxbmc.sh	
+def toggle_boot_to_xbmc():
+	bootenabled = get_boot_to_xmbc_enabled()
+		
+#	with open("/data/hack/boot.sh", "r") as boot:
+#    	lines = boot.readlines()
+#	with open("/data/hack/boot.sh", "w") as boot:
+#		for line in lines:
+#        	if line == "#sh /data/hack/checkxbmc.sh &":
+#        		boot.write(re.sub(r'^#sh /data/hack/checkxbmc.sh &', 'sh /data/hack/checkxbmc.sh &', line))
+#			elif line == 'sh /data/hack/checkxbmc.sh &':
+#				boot.write(re.sub(r'^sh /data/hack/checkxbmc.sh &', '#sh /data/hack/checkxbmc.sh &', line))			
+	if bootenabled == "1":
+		bootenabled = "0"
+		os.system("sed -i 's/sh \/data\/hack/checkxbmc\.sh/\#sh \/data\/hack/checkxbmc\.sh' /data/hack/boot.sh")
+	else:
+		bootenabled = "1"
+		os.system("sed -i 's/\#sh \/data\/hack/checkxbmc\.sh/sh \/data\/hack/checkxbmc\.sh' /data/hack/boot.sh")
+	
+	common.file_put_contents("/data/etc/.boot_to_xbmc_enabled", bootenabled)
+	common.set_string("boot-to-xbmc", bootenabled)
 
 if (__name__ == "__main__"):
     command = sys.argv[1]
@@ -439,7 +468,7 @@ if (__name__ == "__main__"):
     if command == "browser-homepage": set_browser_homepage()
     if command == "toggle-jump-to-last-unwatched": toggle_jump_to_last_unwatched()
 
-	if command == "toggle-boot-to-xbmc": toggle-boot-to-xbmc()
-	if command == "launch-xbmc": launch-xbmc()
+	if command == "toggle-boot-to-xbmc": toggle_boot_to_xbmc()
+	if command == "launch-xbmc": launch_xbmc()
 	
     if command == "shutdown": shutdown()
