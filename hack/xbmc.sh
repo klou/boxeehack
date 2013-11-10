@@ -16,7 +16,9 @@ do
 		fi
 	done
 	case "${ret}" in
-		0 ) # Quit
+		0 ) # Quit (Reboot to Boxee)
+			reboot
+			break 2
 			 ;;
 		64 ) # Shutdown System
 			poweroff
