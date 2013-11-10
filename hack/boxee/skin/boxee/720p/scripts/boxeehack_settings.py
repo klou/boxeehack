@@ -441,10 +441,10 @@ def toggle_boot_to_xbmc():
 #				boot.write(re.sub(r'^sh /data/hack/checkxbmc.sh &', '#sh /data/hack/checkxbmc.sh &', line))			
 	if bootenabled == "1":
 		bootenabled = "0"
-		os.system("sed -i 's/sh \/data\/hack/checkxbmc\.sh/\#sh \/data\/hack/checkxbmc\.sh' /data/hack/boot.sh")
+		os.system("sed -i 's:sh /data/hack/checkxbmc.sh:#sh /data/hack/checkxbmc.sh:' /data/hack/boot.sh")
 	else:
 		bootenabled = "1"
-		os.system("sed -i 's/\#sh \/data\/hack/checkxbmc\.sh/sh \/data\/hack/checkxbmc\.sh' /data/hack/boot.sh")
+		os.system("sed -i 's:#sh /data/hack/checkxbmc.sh:sh /data/hack/checkxbmc.sh:' /data/hack/boot.sh")
 	
 	common.file_put_contents("/data/etc/.boot_to_xbmc_enabled", bootenabled)
 	common.set_string("boot-to-xbmc", bootenabled)
