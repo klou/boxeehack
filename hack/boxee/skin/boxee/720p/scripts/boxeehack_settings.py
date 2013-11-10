@@ -408,6 +408,18 @@ def check_new_version():
 def shutdown():
     os.system("poweroff")
 
+# Calls XBMC Launch script
+def launch-xbmc():
+	# Should perform check for xbmc.bin
+	os.system("sh /data/hack/checkxbmc.sh")
+	# If it gets this far, then XBMC does not exist on the external media
+	dialog.ok("XMBC is not found on your External Media!")
+
+# Changes /data/hack/boot.sh to enable or disable checkxbmc.sh	
+def toggle-boot-to-xbmc():
+	
+
+
 if (__name__ == "__main__"):
     command = sys.argv[1]
 
@@ -427,4 +439,7 @@ if (__name__ == "__main__"):
     if command == "browser-homepage": set_browser_homepage()
     if command == "toggle-jump-to-last-unwatched": toggle_jump_to_last_unwatched()
 
+	if command == "toggle-boot-to-xbmc": toggle-boot-to-xbmc()
+	if command == "launch-xbmc": launch-xbmc()
+	
     if command == "shutdown": shutdown()
