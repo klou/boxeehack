@@ -18,6 +18,9 @@ def register_defaults():
     common.set_string("featured-name", get_featured_name() )
     common.set_string("browser-homepage", "".join(get_browser_homepage().split("http://")) )
     
+    if not os.path.exists("/data/etc/.boot_to_xbmc_enabled"):
+        common.file_put_contents("/data/etc/.boot_to_xbmc_enabled", "")
+
     common.set_string("boot-to-xbmc", get_boot_to_xbmc_enabled() )
 
     if not os.path.exists("/data/etc/.subtitles"):
