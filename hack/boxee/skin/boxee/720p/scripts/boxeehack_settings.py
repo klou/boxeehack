@@ -2,7 +2,7 @@ import os
 import xbmc, xbmcgui, mc
 import ConfigParser
 import common
-import re
+#import re
 
 available_providers = ['Addic7ed', 'BierDopje', 'OpenSubtitles', 'SubsWiki', 'Subtitulos', 'Undertexter']
 
@@ -17,6 +17,8 @@ def register_defaults():
     common.set_string("featured-feed", get_featured_feed() )
     common.set_string("featured-name", get_featured_name() )
     common.set_string("browser-homepage", "".join(get_browser_homepage().split("http://")) )
+    
+    common.set_string("boot-to-xbmc", get_boot_to_xbmc_enabled() )
 
     if not os.path.exists("/data/etc/.subtitles"):
         common.file_put_contents("/data/etc/.subtitles", """[DEFAULT]

@@ -11,6 +11,8 @@
 	<onunload>Control.SetFocus(11)</onunload>
 	<onunload>Control.SetFocus(10)</onunload>
 	<onunload>Control.SetFocus(1)</onunload>
+	<onunload>Control.SetFocus(502)</onunload>
+	<onunload>Control.SetFocus(501)</onunload>
 	<defaultcontrol>1</defaultcontrol>
 	<allowoverlay>no</allowoverlay>
 	
@@ -67,7 +69,7 @@
 					<onclick>SetFocus(302)</onclick>
 					<label>Tools</label>
 				</control>
-				<control tyipe="togglebutton" id="500">
+				<control type="togglebutton" id="500">
 					<include>SettingsCategoryToggleButton</include>
 					<onright>SetFocus(501)</onright>
 					<usealttexture>ControlGroup(501).HasFocus()</usealttexture>
@@ -570,9 +572,9 @@
 					<include>SettingsRadioButton</include>
 					<label>Enable Boot to XBMC</label>
 					<selected>StringCompare(Skin.String(boot-to-xbmc-enabled),1)</selected>
-					<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "toggle_boot_to_xbmc")</onclick>
+					<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "toggle-boot-to-xbmc")</onclick>
 				</control>
-			<control>
+			</control>
 			
 			<!-- ABOUT -->
 			<control type="group" id="401">
