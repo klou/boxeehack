@@ -563,9 +563,9 @@
 			<control type="grouplist" id="501">
 				<include>SettingsCategoryArea</include>
 				<visible>ControlGroup(501).HasFocus() | Control.HasFocus(500)</visible>
-				<control type="button" id=502">
+				<control type="button" id="502">
 					<include>SettingsButton</include>
-					<label>Launch XBMC</label>
+					<label>Launch XBMC...</label>
 					<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "launch-xbmc")</onclick>
 				</control>
 				<control type="radiobutton" id="503">

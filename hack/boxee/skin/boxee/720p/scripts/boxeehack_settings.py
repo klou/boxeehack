@@ -434,7 +434,7 @@ def get_boot_to_xbmc_enabled():
 
 # Changes /data/hack/boot.sh to enable or disable checkxbmc.sh	
 def toggle_boot_to_xbmc():
-	bootenabled = get_boot_to_xmbc_enabled()
+	bootenabled = get_boot_to_xbmc_enabled()
 		
 #	with open("/data/hack/boot.sh", "r") as boot:
 #    	lines = boot.readlines()
