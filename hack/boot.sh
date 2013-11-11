@@ -12,6 +12,4 @@ sh /data/hack/telnet.sh &
 sh /data/hack/ftp.sh &
 sh /data/hack/plugins.sh &
 sh /data/hack/checkxbmc.sh &
-if grep -q "1" /data/etc/.xbmc_found ; then
-	#sh /data/hack/xbmclauncher.sh &
-fi
+grep -q "1" /data/etc/.xbmc_found #&& sh /data/hack/xbmclauncher.sh &

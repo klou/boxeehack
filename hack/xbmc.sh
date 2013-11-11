@@ -17,6 +17,8 @@ do
 	done
 	case "${ret}" in
 		0 ) # Quit (Reboot to Boxee until we figure out how to re-launch Boxee)
+			sed -i 's:&& sh /data/hack/xbmclauncher.sh:#&& sh /data/hack/xbmclauncher.sh:' /data/hack/boot.sh
+			# or comment out the entire 'grep' line
 			reboot
 			break 2
 			 ;;
