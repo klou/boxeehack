@@ -413,14 +413,12 @@ def shutdown():
 # Calls XBMC Launch script
 def launch_xbmc():
 # Should perform check for xbmc.bin
-    os.system("sh /data/hack/checkxbmc.sh")
-# If it gets this far, then XBMC does not exist on the external media
-    dialog.ok("XMBC is not found on your External Media!")
+    os.system("sh /data/hack/xbmclauncher.sh")
 
 # Reads /data/hack/boot.sh to see if the checkxbmc.sh line is commented out
 def get_boot_to_xbmc_enabled():
     bootscript = common.file_get_contents('/data/hack/boot.sh')
-    if '#sh /data/hack/checkxbmc.sh &' in bootscript:
+    if '#sh /data/hack/xbmclauncher.sh &' in bootscript:
         bootenabled = "0"
     else:
         bootenabled = "1"
@@ -432,10 +430,10 @@ def toggle_boot_to_xbmc():
     bootenabled = get_boot_to_xbmc_enabled()		
     if bootenabled == "1":
         bootenabled = "0"
-        os.system("sed -i 's:sh /data/hack/checkxbmc.sh:#sh /data/hack/checkxbmc.sh:' /data/hack/boot.sh")
+        os.system("sed -i 's:sh /data/hack/xbmclauncher.sh:#sh /data/hack/xbmclauncher.sh:' /data/hack/boot.sh")
     else:
         bootenabled = "1"
-        os.system("sed -i 's:#sh /data/hack/checkxbmc.sh:sh /data/hack/checkxbmc.sh:' /data/hack/boot.sh")
+        os.system("sed -i 's:#sh /data/hack/xbmclauncher.sh:sh /data/hack/xbmclauncher.sh:' /data/hack/boot.sh")
 
     common.set_string("boot-to-xbmc", bootenabled)
 
