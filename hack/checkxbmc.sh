@@ -1,13 +1,8 @@
 for m in /tmp/mnt/*; do
 	if [ -f ${m}/xbmc.bin ] || [ -f ${m}/xbmc/xbmc.bin ]; then
-		/etc/rc3.d/U94boxeehal stop
-		/etc/rc3.d/U99boxee stop
-		killall BoxeeHal
-		killall BoxeeLauncher
-		killall Boxee
-		killall run_boxee.sh
-		mount -o bind /data/hack/xbmc.sh /opt/boxee/BoxeeLauncher
-		break
+		touch /data/etc/.xbmc_found
+	else
+		rm -f /data/etc/.xbmc_found
 	fi
 done
 

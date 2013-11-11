@@ -16,7 +16,7 @@ do
 		fi
 	done
 	case "${ret}" in
-		0 ) # Quit (Reboot to Boxee)
+		0 ) # Quit (Reboot to Boxee until we figure out how to re-launch Boxee)
 			reboot
 			break 2
 			 ;;
