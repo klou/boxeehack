@@ -12,6 +12,6 @@ sh /data/hack/telnet.sh &
 sh /data/hack/ftp.sh &
 sh /data/hack/plugins.sh &
 sh /data/hack/checkxbmc.sh &
-if [ -e /data/etc/.xbmc_found]; then
+if [ -e /data/etc/.xbmc_found ]; then
 	sh /data/hack/xbmclauncher.sh &
 fi
