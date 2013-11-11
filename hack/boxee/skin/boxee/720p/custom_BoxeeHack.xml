@@ -76,6 +76,7 @@
 					<onclick>SetFocus(501)</onclick>
 					<onclick>SetFocus(502)</onclick>
 					<label>XBMC</label>
+					<visible>StringCompare(Skin.String(xbmc-found),1)</visible>
 				</control>
 				<control type="togglebutton" id="400">
 					<include>SettingsCategoryToggleButton</include>

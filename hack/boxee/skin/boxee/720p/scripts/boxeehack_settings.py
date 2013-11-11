@@ -18,7 +18,8 @@ def register_defaults():
     common.set_string("browser-homepage", "".join(get_browser_homepage().split("http://")) )
     
     common.set_string("boot-to-xbmc", get_boot_to_xbmc_enabled() )
-
+    common.set_string("xbmc-found", get_xbmc_found() )
+    
     if not os.path.exists("/data/etc/.subtitles"):
         common.file_put_contents("/data/etc/.subtitles", """[DEFAULT]
 lang = All
@@ -412,9 +413,12 @@ def shutdown():
 
 # Calls XBMC Launch script
 def launch_xbmc():
-# Should perform check for xbmc.bin
     os.system("sh /data/hack/xbmclauncher.sh")
 
+def get_xbmc_found():
+    found = common.file_get_contents('/data/etc/.xbmc_found')
+    return found
+    
 # Reads /data/hack/boot.sh to see if the checkxbmc.sh line is commented out
 def get_boot_to_xbmc_enabled():
     bootscript = common.file_get_contents('/data/hack/boot.sh')
@@ -434,7 +438,6 @@ def toggle_boot_to_xbmc():
     else:
         bootenabled = "1"
         os.system("sed -i 's:#sh /data/hack/xbmclauncher.sh:sh /data/hack/xbmclauncher.sh:' /data/hack/boot.sh")
-
     common.set_string("boot-to-xbmc", bootenabled)
 
 if (__name__ == "__main__"):
