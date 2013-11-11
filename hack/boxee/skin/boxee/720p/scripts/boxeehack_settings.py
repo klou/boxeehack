@@ -18,9 +18,6 @@ def register_defaults():
     common.set_string("featured-name", get_featured_name() )
     common.set_string("browser-homepage", "".join(get_browser_homepage().split("http://")) )
     
-    if not os.path.exists("/data/etc/.boot_to_xbmc_enabled"):
-        common.file_put_contents("/data/etc/.boot_to_xbmc_enabled", "")
-
     common.set_string("boot-to-xbmc", get_boot_to_xbmc_enabled() )
 
     if not os.path.exists("/data/etc/.subtitles"):
@@ -423,15 +420,13 @@ def launch_xbmc():
 
 # Reads /data/hack/boot.sh to see if the checkxbmc.sh line is commented out
 def get_boot_to_xbmc_enabled():
-    bootenabled = common.file_get_contents("/data/etc/.boot_to_xbmc_enabled")
-    if bootenabled == "":
+    if '#sh /data/hack/checkxbmc.sh &' in open('/data/hack/boot.sh').read():
+        bootenabled = "0"
+	else:
         bootenabled = "1"
-    return bootenabled	
-#	if '#sh /data/hack/checkxbmc.sh &' in open('/data/hack/boot.sh').read():
-#		return "0"
-#	else:
-#		return "1"
-
+    common.set_string("boot-to-xbmc", bootenabled)
+    return bootenabled
+	
 # Changes /data/hack/boot.sh to enable or disable checkxbmc.sh	
 def toggle_boot_to_xbmc():
 	bootenabled = get_boot_to_xbmc_enabled()
@@ -451,7 +446,6 @@ def toggle_boot_to_xbmc():
         bootenabled = "1"
         os.system("sed -i 's:#sh /data/hack/checkxbmc.sh:sh /data/hack/checkxbmc.sh:' /data/hack/boot.sh")
 
-    common.file_put_contents("/data/etc/.boot_to_xbmc_enabled", bootenabled)
     common.set_string("boot-to-xbmc", bootenabled)
 
 if (__name__ == "__main__"):
