@@ -615,6 +615,10 @@
 						<include>SettingsLabelEntry</include>
 						<label>Winedog</label>
 					</control>
+					<control type="label">
+						<include>SettingsLabelEntry</include>
+						<label>Kruce</label>
+					</control>
 				</control>
 				<control type="grouplist">
 					<posx>220</posx>

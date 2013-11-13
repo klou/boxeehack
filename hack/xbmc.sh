@@ -1,6 +1,6 @@
 #!/bin/sh
 while true
-do
+do	
 	for m in /tmp/mnt/*; do
         if [ -f ${m}/xbmc.bin ] || [ -f ${m}/xbmc/xbmc.bin ]; then
 			# If XBMC is in a folder called xbmc instead of the root
@@ -17,11 +17,13 @@ do
 	done
 	case "${ret}" in
 		0 ) # Quit (Reboot to Boxee until we figure out how to re-launch Boxee)
-			sed -i 's:&& sh /data/hack/xbmclauncher.sh:#&& sh /data/hack/xbmclauncher.sh:' /data/hack/boot.sh
-			# or comment out the entire 'grep' line
+			if not grep -Fxq '#sh /data/hack/bootlaunchxbmc &' /data/hack/boot.sh
+			then
+				sed -i 's:sh /data/hack/bootlaunchxbmc.sh:#sh /data/hack/bootlaunchxbmc.sh:' /data/hack/boot.sh
+			fi
 			reboot
 			break 2
-			 ;;
+			;;
 		64 ) # Shutdown System
 			poweroff
 			break 2 
