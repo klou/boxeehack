@@ -413,7 +413,7 @@ def shutdown():
 
 # Calls XBMC Launch script
 def launch_xbmc():
-    os.system("sh /data/hack/xbmclauncher.sh")
+    os.system("/data/hack/xbmclauncher.sh")
 
 def get_xbmc_found():
     found = common.file_get_contents('/data/etc/.xbmc_found')
