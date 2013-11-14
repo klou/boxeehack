@@ -5,6 +5,5 @@ killall BoxeeHal
 killall BoxeeLauncher
 killall Boxee
 killall run_boxee.sh
-killall checkxbmc.sh
 mount -o bind /data/hack/xbmc.sh /opt/boxee/BoxeeLauncher
 break

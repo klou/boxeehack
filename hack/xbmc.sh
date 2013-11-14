@@ -17,9 +17,9 @@ do
 	done
 	case "${ret}" in
 		0 ) # Quit (Reboot to Boxee until we figure out how to re-launch Boxee)
-			if not grep -Fxq '#sh /data/hack/bootlaunchxbmc &' /data/hack/boot.sh
+			if not grep -Fxq '#sh /data/hack/bootxbmc &' /data/hack/boot.sh
 			then
-				sed -i 's:sh /data/hack/bootlaunchxbmc.sh:#sh /data/hack/bootlaunchxbmc.sh:' /data/hack/boot.sh
+				sed -i 's:sh /data/hack/bootxbmc.sh:#sh /data/hack/bootxbmc.sh:' /data/hack/boot.sh
 			fi
 			reboot
 			break 2

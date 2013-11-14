@@ -413,7 +413,9 @@ def shutdown():
 
 # Calls XBMC Launch script
 def launch_xbmc():
-    os.system("touch /data/etc/.launchxbmc")
+    dialog = xbmcgui.Dialog()
+    if dialog.yesno("Launch XBMC", "This will exit Boxee and launch XBMC.  Continue?"):
+        os.system("touch /data/etc/.launch_xbmc")
 
 def get_xbmc_found():
     found = common.file_get_contents('/data/etc/.xbmc_found')

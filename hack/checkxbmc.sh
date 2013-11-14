@@ -1,10 +1,10 @@
-# Note: To follow conventions of other flags in /data/etc, xbmco_found is "reverse boolean".
+# Note: To follow conventions of other flags in /data/etc, xbmc_found is "reverse boolean".
 # 0 = false
 # 1 = true
 # Sleeps until LAUNCH flag exists, then wakes up, kills BOXEE, launches XBMC
 
-LAUNCH = /data/etc/.launchxbmc
-FOUND = /data/etc/.xmbc_found
+LAUNCH=/data/etc/.launch_xbmc
+FOUND=/data/etc/.xbmc_found
 
 echo -n '0' > $FOUND
 
@@ -19,6 +19,10 @@ for m in /tmp/mnt/*; do
 		# Sleep until LAUNCH exists
 		while [ ! -e $LAUNCH ]
 		do
+			if (ps x | grep -q xbmc.bin)
+			then
+				kill -9 $$
+			fi
 			sleep 5
 		done
 
