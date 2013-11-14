@@ -442,6 +442,11 @@ def toggle_boot_to_xbmc():
         os.system("sed -i 's:#sh /data/hack/bootxbmc.sh:sh /data/hack/bootxbmc.sh:' /data/hack/boot.sh")
     common.set_string("boot-to-xbmc", bootenabled)
 
+# Displays README-style instructions
+def display_xbmc_notes():
+    dialog = xbmcgui.Dialog()
+    dialog.ok("XBMC Exit Button", "The XBMC Exit button in the power options will disable the XBMC auto-boot and reboot into Boxee.  Use Shutdown to poweroff and preserve auto-boot.")
+
 if (__name__ == "__main__"):
     command = sys.argv[1]
 
@@ -463,5 +468,6 @@ if (__name__ == "__main__"):
 
     if command == "toggle-boot-to-xbmc": toggle_boot_to_xbmc()
     if command == "launch-xbmc": launch_xbmc()
+    if command == "display-xbmc-notes": display_xbmc_notes()
 	
     if command == "shutdown": shutdown()
