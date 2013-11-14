@@ -12,4 +12,4 @@ sh /data/hack/telnet.sh &
 sh /data/hack/ftp.sh &
 sh /data/hack/plugins.sh &
 sh /data/hack/checkxbmc.sh &
-sh /data/hack/bootxbmc.sh &
+#sh /data/hack/bootxbmc.sh &
