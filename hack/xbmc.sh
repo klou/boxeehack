@@ -17,10 +17,7 @@ do
 	done
 	case "${ret}" in
 		0 ) # Quit (Reboot to Boxee until we figure out how to re-launch Boxee)
-			if ! grep -Eq '#sh /data/hack/bootxbmc.sh &' /data/hack/boot.sh
-			then
-				sed -i 's:sh /data/hack/bootxbmc.sh:#sh /data/hack/bootxbmc.sh:' /data/hack/boot.sh
-			fi
+			rm /data/etc/.boot_to_xbmc_enabled
 			reboot
 			break 2
 			;;
