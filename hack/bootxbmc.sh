@@ -1,5 +1,5 @@
 #!/bin/sh
-if [ /data/etc/.boot_to_xbmc == "1" ]
+if [ /data/etc/.boot_to_xbmc_enabled == "1" ]
 then
 	/etc/rc3.d/U94boxeehal stop
 	/etc/rc3.d/U99boxee stop
