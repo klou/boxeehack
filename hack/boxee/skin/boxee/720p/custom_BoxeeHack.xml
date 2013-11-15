@@ -11,6 +11,8 @@
 	<onunload>Control.SetFocus(11)</onunload>
 	<onunload>Control.SetFocus(10)</onunload>
 	<onunload>Control.SetFocus(1)</onunload>
+	<onunload>Control.SetFocus(502)</onunload>
+	<onunload>Control.SetFocus(501)</onunload>
 	<defaultcontrol>1</defaultcontrol>
 	<allowoverlay>no</allowoverlay>
 	
@@ -67,6 +69,15 @@
 					<onclick>SetFocus(302)</onclick>
 					<label>Tools</label>
 				</control>
+				<control type="togglebutton" id="500">
+					<include>SettingsCategoryToggleButton</include>
+					<onright>SetFocus(501)</onright>
+					<usealttexture>ControlGroup(501).HasFocus()</usealttexture>
+					<onclick>SetFocus(501)</onclick>
+					<onclick>SetFocus(502)</onclick>
+					<label>XBMC</label>
+<!--					<visible>StringCompare(Skin.String(xbmc-found),1)</visible> -->
+				</control>
 				<control type="togglebutton" id="400">
 					<include>SettingsCategoryToggleButton</include>
 					<usealttexture>false</usealttexture>
@@ -109,7 +120,7 @@
 					<include>SettingsButton</include>
 					<label>Check for new version...</label>
 					<label2>$INFO[Skin.String(boxeeplus-version)]</label2>
-					<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "version")</onclick>
+					<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_update.py", "version")</onclick>
 				</control>
 			</control>
 			
@@ -162,6 +173,13 @@
 						<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "featured_previous")</onclick>
 					</control>
 				</control>
+					<control type="button" id="103">
+					<ondown>SetFocus(104)</ondown>
+					<include>SettingsButton</include>
+					<label>Youtube username</label>
+					<label2>$INFO[Skin.String(youtube)]</label2>
+					<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "youtube")</onclick>
+				</control>	
 				<control type="group">
 					<height>56</height>
 					<control type="label">
@@ -169,101 +187,56 @@
 						<label>Home screen icons</label>
 					</control>
 				</control>
-				<control type="group" id="103">
+				<control type="group" id="104">
 					<width>850</width>
 					<height>56</height>
 					<control type="image">
-						<visible>ControlGroup(103).HasFocus()</visible>
+						<visible>ControlGroup(104).HasFocus()</visible>
 						<include>SettingsScrollBG</include>
 					</control>
 					<control type="label">
-						<visible>!ControlGroup(103).HasFocus()</visible>
+						<visible>!ControlGroup(104).HasFocus()</visible>
 						<include>SettingsScrollLabelUnfocused</include>
 						<label>Friends</label>
 					</control>
 					<control type="label">
-						<visible>ControlGroup(103).HasFocus()</visible>
+						<visible>ControlGroup(104).HasFocus()</visible>
 						<include>SettingsScrollLabelFocused</include>
 						<label>Friends</label>
 					</control>
 					<control type="label">
-						<visible>!ControlGroup(103).HasFocus()</visible>
+						<visible>!ControlGroup(104).HasFocus()</visible>
 						<include>SettingsScrollLabel2Unfocused</include>
 						<label>$INFO[Skin.String(home-friends-replacement)]</label>
 					</control>
 					<control type="label">
-						<visible>ControlGroup(103).HasFocus()</visible>
+						<visible>ControlGroup(104).HasFocus()</visible>
 						<include>SettingsScrollLabel2Focused</include>
 						<label>$INFO[Skin.String(home-friends-replacement)]</label>
 					</control>
 
-					<control type="button" id="10301">
-						<onup>102</onup>
-						<ondown>104</ondown>
-						<onright>10302</onright>
+					<control type="button" id="10401">
+						<onup>103</onup>
+						<ondown>105</ondown>
+						<onright>10402</onright>
 						<onleft>1</onleft>
 						<include>SettingsScrollButtonUp</include>
 						<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "homeenabled", "friends", "next")</onclick>
 					</control>
-					<control type="button" id="10302">
-						<onup>102</onup>
-						<ondown>104</ondown>
+					<control type="button" id="10402">
+						<onup>103</onup>
+						<ondown>105</ondown>
 						<onright>-</onright>
-						<onleft>10301</onleft>
+						<onleft>10401</onleft>
 						<include>SettingsScrollButtonDown</include>
 						<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "homeenabled", "friends", "previous")</onclick>
 					</control>
 				</control>
-				<control type="radiobutton" id="104">
+				<control type="radiobutton" id="105">
 					<include>SettingsRadioButton</include>
 					<label>Watch later</label>
 					<selected>StringCompare(Skin.String(homeenabled-watchlater),1)</selected>
 					<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "homeenabled", "watchlater")</onclick>
-				</control>
-				<control type="group" id="105">
-					<width>850</width>
-					<height>56</height>
-					<control type="image">
-						<visible>ControlGroup(105).HasFocus()</visible>
-						<include>SettingsScrollBG</include>
-					</control>
-					<control type="label">
-						<visible>!ControlGroup(105).HasFocus()</visible>
-						<include>SettingsScrollLabelUnfocused</include>
-						<label>Shows</label>
-					</control>
-					<control type="label">
-						<visible>ControlGroup(105).HasFocus()</visible>
-						<include>SettingsScrollLabelFocused</include>
-						<label>Shows</label>
-					</control>
-					<control type="label">
-						<visible>!ControlGroup(105).HasFocus()</visible>
-						<include>SettingsScrollLabel2Unfocused</include>
-						<label>$INFO[Skin.String(home-shows-replacement)]</label>
-					</control>
-					<control type="label">
-						<visible>ControlGroup(105).HasFocus()</visible>
-						<include>SettingsScrollLabel2Focused</include>
-						<label>$INFO[Skin.String(home-shows-replacement)]</label>
-					</control>
-
-					<control type="button" id="10501">
-						<onup>104</onup>
-						<ondown>106</ondown>
-						<onright>10502</onright>
-						<onleft>1</onleft>
-						<include>SettingsScrollButtonUp</include>
-						<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "homeenabled", "shows", "next")</onclick>
-					</control>
-					<control type="button" id="10502">
-						<onup>104</onup>
-						<ondown>106</ondown>
-						<onright>-</onright>
-						<onleft>10501</onleft>
-						<include>SettingsScrollButtonDown</include>
-						<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "homeenabled", "shows", "previous")</onclick>
-					</control>
 				</control>
 				<control type="group" id="106">
 					<width>850</width>
@@ -275,22 +248,22 @@
 					<control type="label">
 						<visible>!ControlGroup(106).HasFocus()</visible>
 						<include>SettingsScrollLabelUnfocused</include>
-						<label>Movies</label>
+						<label>Shows</label>
 					</control>
 					<control type="label">
 						<visible>ControlGroup(106).HasFocus()</visible>
 						<include>SettingsScrollLabelFocused</include>
-						<label>Movies</label>
+						<label>Shows</label>
 					</control>
 					<control type="label">
 						<visible>!ControlGroup(106).HasFocus()</visible>
 						<include>SettingsScrollLabel2Unfocused</include>
-						<label>$INFO[Skin.String(home-movies-replacement)]</label>
+						<label>$INFO[Skin.String(home-shows-replacement)]</label>
 					</control>
 					<control type="label">
 						<visible>ControlGroup(106).HasFocus()</visible>
 						<include>SettingsScrollLabel2Focused</include>
-						<label>$INFO[Skin.String(home-movies-replacement)]</label>
+						<label>$INFO[Skin.String(home-shows-replacement)]</label>
 					</control>
 
 					<control type="button" id="10601">
@@ -299,7 +272,7 @@
 						<onright>10602</onright>
 						<onleft>1</onleft>
 						<include>SettingsScrollButtonUp</include>
-						<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "homeenabled", "movies", "next")</onclick>
+						<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "homeenabled", "shows", "next")</onclick>
 					</control>
 					<control type="button" id="10602">
 						<onup>105</onup>
@@ -307,7 +280,7 @@
 						<onright>-</onright>
 						<onleft>10601</onleft>
 						<include>SettingsScrollButtonDown</include>
-						<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "homeenabled", "movies", "previous")</onclick>
+						<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "homeenabled", "shows", "previous")</onclick>
 					</control>
 				</control>
 				<control type="group" id="107">
@@ -320,22 +293,22 @@
 					<control type="label">
 						<visible>!ControlGroup(107).HasFocus()</visible>
 						<include>SettingsScrollLabelUnfocused</include>
-						<label>Music</label>
+						<label>Movies</label>
 					</control>
 					<control type="label">
 						<visible>ControlGroup(107).HasFocus()</visible>
 						<include>SettingsScrollLabelFocused</include>
-						<label>Music</label>
+						<label>Movies</label>
 					</control>
 					<control type="label">
 						<visible>!ControlGroup(107).HasFocus()</visible>
 						<include>SettingsScrollLabel2Unfocused</include>
-						<label>$INFO[Skin.String(home-music-replacement)]</label>
+						<label>$INFO[Skin.String(home-movies-replacement)]</label>
 					</control>
 					<control type="label">
 						<visible>ControlGroup(107).HasFocus()</visible>
 						<include>SettingsScrollLabel2Focused</include>
-						<label>$INFO[Skin.String(home-music-replacement)]</label>
+						<label>$INFO[Skin.String(home-movies-replacement)]</label>
 					</control>
 
 					<control type="button" id="10701">
@@ -344,7 +317,7 @@
 						<onright>10702</onright>
 						<onleft>1</onleft>
 						<include>SettingsScrollButtonUp</include>
-						<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "homeenabled", "music", "next")</onclick>
+						<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "homeenabled", "movies", "next")</onclick>
 					</control>
 					<control type="button" id="10702">
 						<onup>106</onup>
@@ -352,26 +325,77 @@
 						<onright>-</onright>
 						<onleft>10701</onleft>
 						<include>SettingsScrollButtonDown</include>
+						<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "homeenabled", "movies", "previous")</onclick>
+					</control>
+				</control>
+				<control type="group" id="108">
+					<width>850</width>
+					<height>56</height>
+					<control type="image">
+						<visible>ControlGroup(108).HasFocus()</visible>
+						<include>SettingsScrollBG</include>
+					</control>
+					<control type="label">
+						<visible>!ControlGroup(108).HasFocus()</visible>
+						<include>SettingsScrollLabelUnfocused</include>
+						<label>Music</label>
+					</control>
+					<control type="label">
+						<visible>ControlGroup(108).HasFocus()</visible>
+						<include>SettingsScrollLabelFocused</include>
+						<label>Music</label>
+					</control>
+					<control type="label">
+						<visible>!ControlGroup(108).HasFocus()</visible>
+						<include>SettingsScrollLabel2Unfocused</include>
+						<label>$INFO[Skin.String(home-music-replacement)]</label>
+					</control>
+					<control type="label">
+						<visible>ControlGroup(108).HasFocus()</visible>
+						<include>SettingsScrollLabel2Focused</include>
+						<label>$INFO[Skin.String(home-music-replacement)]</label>
+					</control>
+
+					<control type="button" id="10801">
+						<onup>107</onup>
+						<ondown>109</ondown>
+						<onright>10802</onright>
+						<onleft>1</onleft>
+						<include>SettingsScrollButtonUp</include>
+						<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "homeenabled", "music", "next")</onclick>
+					</control>
+					<control type="button" id="10802">
+						<onup>107</onup>
+						<ondown>109</ondown>
+						<onright>-</onright>
+						<onleft>10801</onleft>
+						<include>SettingsScrollButtonDown</include>
 						<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "homeenabled", "music", "previous")</onclick>
 					</control>
 				</control>
-				<control type="radiobutton" id="108">
+				<control type="radiobutton" id="109">
 					<include>SettingsRadioButton</include>
 					<label>Apps</label>
 					<selected>StringCompare(Skin.String(homeenabled-apps),1)</selected>
 					<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "homeenabled", "apps")</onclick>
 				</control>
-				<control type="radiobutton" id="109">
+				<control type="radiobutton" id="110">
 					<include>SettingsRadioButton</include>
 					<label>Files</label>
 					<selected>StringCompare(Skin.String(homeenabled-files),1)</selected>
 					<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "homeenabled", "files")</onclick>
 				</control>
-				<control type="radiobutton" id="110">
+				<control type="radiobutton" id="111">
 					<include>SettingsRadioButton</include>
 					<label>Web</label>
 					<selected>StringCompare(Skin.String(homeenabled-web),1)</selected>
 					<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "homeenabled", "web")</onclick>
+				</control>
+				<control type="radiobutton" id="112">
+					<include>SettingsRadioButton</include>
+					<label>Photos</label>
+					<selected>StringCompare(Skin.String(homeenabled-photos),1)</selected>
+					<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "homeenabled", "photos")</onclick>
 				</control>
 			</control>
 			
@@ -536,6 +560,29 @@
 				</control>
 			</control>
 			
+			<!-- XBMC -->
+			<control type="grouplist" id="501">
+				<include>SettingsCategoryArea</include>
+				<visible>ControlGroup(501).HasFocus() | Control.HasFocus(500)</visible>
+				<control type="button" id="502">
+					<include>SettingsButton</include>
+					<label>Launch XBMC...</label>
+					<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "launch-xbmc")</onclick>
+					<visible>StringCompare(Skin.String(xbmc-found),1)</visible>
+				</control>
+				<control type="radiobutton" id="503">
+					<include>SettingsRadioButton</include>
+					<label>Enable Boot to XBMC</label>
+					<selected>StringCompare(Skin.String(boot-to-xbmc),1)</selected>
+					<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "toggle-boot-to-xbmc")</onclick>
+				</control>
+				<control type="button" id="504">
+					<include>SettingsButton</include>
+					<label>Display XBMC Boot README...</label>
+					<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "display-xbmc-notes")</onclick>
+				</control>
+			</control>
+			
 			<!-- ABOUT -->
 			<control type="group" id="401">
 				<include>SettingsCategoryArea</include>
@@ -573,6 +620,10 @@
 					<control type="label">
 						<include>SettingsLabelEntry</include>
 						<label>Winedog</label>
+					</control>
+					<control type="label">
+						<include>SettingsLabelEntry</include>
+						<label>Kruce</label>
 					</control>
 				</control>
 				<control type="grouplist">

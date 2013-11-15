@@ -16,7 +16,10 @@ def register_defaults():
     common.set_string("featured-feed", get_featured_feed() )
     common.set_string("featured-name", get_featured_name() )
     common.set_string("browser-homepage", "".join(get_browser_homepage().split("http://")) )
-
+    
+    common.set_string("boot-to-xbmc", get_boot_to_xbmc_enabled() )
+    common.set_string("xbmc-found", get_xbmc_found() )
+    
     if not os.path.exists("/data/etc/.subtitles"):
         common.file_put_contents("/data/etc/.subtitles", """[DEFAULT]
 lang = All
@@ -27,6 +30,9 @@ plugins = BierDopje,OpenSubtitles,Subtitulos,SubsWiki,Addic7ed,Undertexter
 [BierDopje]
 key = C2FAFCBE34610608
 """)
+
+    if not os.path.exists("/data/etc/.boot_to_xbmc_enabled"):
+        common.file_put_contents("/data/etc/.boot_to_xbmc_enabled", "0")
     
     set_home_enabled_strings()
 
@@ -35,7 +41,7 @@ key = C2FAFCBE34610608
         common.set_string("boxeeplus-version", version_local )
 
 def get_home_enabled_default_list():
-    return "-,friends|Built-in,watchlater,shows|Built-in,movies|Built-in,music|Built-in,apps,files,web"
+    return "-,friends|Built-in,watchlater,shows|Built-in,movies|Built-in,music|Built-in,apps,files,web,photos"
     
 def set_home_enabled_strings():
     homeitems = get_home_enabled_default_list().split(",")
@@ -191,6 +197,24 @@ def set_telnet_password():
         else:
             common.file_put_contents("/data/etc/passwd", passwd)    
 
+# Set the username for youtube subscription
+def set_youtube_sub():
+    youtube = common.file_get_contents("/data/etc/youtube")
+    yt = xbmc.Keyboard('default', 'heading', True)
+    yt.setDefault(youtube) # optional
+    yt.setHeading('Enter YouTube username') # optional
+    yt.setHiddenInput(False) # optional
+    yt.doModal()
+    
+    if yt.isConfirmed():
+         you = yt.getText()
+         if you == "":
+              dialog = xbmcgui.Dialog()
+              ok = dialog.ok('YouTube', 'You most enter a username.')
+         else:
+              common.file_put_contents("/data/etc/youtube", you)
+              xbmc.executebuiltin("Skin.SetString(youtube,%s)" % you )	
+
 # Determine whether subtitle functionality is enabled/enabled
 def get_subtitles_enabled():
     subtitles = common.file_get_contents("/data/etc/.subtitles_enabled")
@@ -211,7 +235,7 @@ def get_subtitles_language_filter():
 def featured_next():
     replace = get_featured_feed_value()
     num = int(replace) + 1
-    if num > 4: num = 0
+    if num > 5: num = 0
 
     replace = "%s" % num
 
@@ -222,7 +246,7 @@ def featured_next():
 def featured_previous():
     replace = get_featured_feed_value()
     num = int(replace) - 1
-    if num < 0: num = 4
+    if num < 0: num = 5
 
     replace = "%s" % num
 
@@ -231,13 +255,15 @@ def featured_previous():
     common.set_string("featured-name", get_featured_name() )
 
 def get_featured_feed():
+    youtube = common.file_get_contents("/data/etc/youtube")
     replace = get_featured_feed_value()
     feed = "feed://featured/?limit=15"
-
+    
     if replace == "1": feed = "boxeedb://recent/?limit=15"
     if replace == "2": feed = "rss://vimeo.com/channels/staffpicks/videos/rss"
     if replace == "3": feed = "rss://gdata.youtube.com/feeds/api/standardfeeds/recently_featured?alt=rss"
-    if replace == "4": feed = "about:blank"
+    if replace == "4": feed = "rss://gdata.youtube.com/feeds/api/users/" + youtube + "/newsubscriptionvideos?alt=rss"
+    if replace == "5": feed = "about:blank"
 
     return feed
 
@@ -248,7 +274,8 @@ def get_featured_name():
     if replace == "1": name = "Recently added"
     if replace == "2": name = "Vimeo staff picks"
     if replace == "3": name = "Youtube featured"
-    if replace == "4": name = "Fanart"
+    if replace == "4": name = "Youtube subscription"
+    if replace == "5": name = "Fanart"
 
     return name
 
@@ -343,7 +370,7 @@ def subtitle_provider(method, section, provider=None):
 # Get the remote version number from github
 def get_remote_version():
     import urllib2
-    u = urllib2.urlopen('https://raw.github.com/boxeehacks/boxeehack/master/hack/version')
+    u = urllib2.urlopen('http://boxeed.in/boxeeplus/version')
     version_remote = "%s" % u.read()
     return version_remote
 
@@ -387,10 +414,42 @@ def check_new_version():
 def shutdown():
     os.system("poweroff")
 
+# Calls XBMC Launch script
+def launch_xbmc():
+    dialog = xbmcgui.Dialog()
+    if dialog.yesno("Launch XBMC", "This will exit Boxee and launch XBMC.  Continue?"):
+        os.system("touch /data/etc/.launch_xbmc")
+
+def get_xbmc_found():
+    found = common.file_get_contents('/data/etc/.xbmc_found')
+    return found
+    
+# Reads /data/hack/boot.sh to see if the checkxbmc.sh line is commented out
+def get_boot_to_xbmc_enabled():
+    bootenabled = common.file_get_contents('/data/etc/.boot_to_xbmc_enabled')
+    return bootenabled
+
+# Changes /data/hack/boot.sh to enable or disable checkxbmc.sh	
+def toggle_boot_to_xbmc():
+    bootenabled = get_boot_to_xbmc_enabled()		
+    if bootenabled == "1":
+        bootenabled = "0"
+        common.file_put_contents("/data/etc/.boot_to_xbmc_enabled", "0")
+    else:
+        bootenabled = "1"
+        common.file_put_contents("/data/etc/.boot_to_xbmc_enabled", "1")
+    common.set_string("boot-to-xbmc", bootenabled)
+
+# Displays README-style instructions
+def display_xbmc_notes():
+    dialog = xbmcgui.Dialog()
+    dialog.ok("XBMC Exit Button", "The Exit button in the power options will disable the XBMC auto-boot and then reboot into Boxee.")
+
 if (__name__ == "__main__"):
     command = sys.argv[1]
 
     if command == "telnet": set_telnet_password()
+    if command == "youtube": set_youtube_sub()
     if command == "subtitles": toggle_subtitles(sys.argv[2], sys.argv[3])
     if command == "version": check_new_version()
     if command == "defaults": register_defaults()
@@ -405,4 +464,8 @@ if (__name__ == "__main__"):
     if command == "browser-homepage": set_browser_homepage()
     if command == "toggle-jump-to-last-unwatched": toggle_jump_to_last_unwatched()
 
+    if command == "toggle-boot-to-xbmc": toggle_boot_to_xbmc()
+    if command == "launch-xbmc": launch_xbmc()
+    if command == "display-xbmc-notes": display_xbmc_notes()
+	
     if command == "shutdown": shutdown()
