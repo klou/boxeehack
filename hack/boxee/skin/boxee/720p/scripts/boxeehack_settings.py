@@ -426,12 +426,6 @@ def get_xbmc_found():
     
 # Reads /data/hack/boot.sh to see if the checkxbmc.sh line is commented out
 def get_boot_to_xbmc_enabled():
-#    bootscript = common.file_get_contents('/data/hack/boot.sh')
-#    if '#sh /data/hack/bootxbmc.sh &' in bootscript:
-#        bootenabled = "0"
-#    else:
-#        bootenabled = "1"
-#    common.set_string("boot-to-xbmc", bootenabled)
     bootenabled = common.file_get_contents('/data/etc/.boot_to_xbmc_enabled')
     return bootenabled
 
@@ -440,11 +434,9 @@ def toggle_boot_to_xbmc():
     bootenabled = get_boot_to_xbmc_enabled()		
     if bootenabled == "1":
         bootenabled = "0"
-#        os.system("sed -i 's:sh /data/hack/bootxbmc.sh:#sh /data/hack/bootxbmc.sh:' /data/hack/boot.sh")
         common.file_put_contents("/data/etc/.boot_to_xbmc_enabled", "0")
     else:
         bootenabled = "1"
-#        os.system("sed -i 's:#sh /data/hack/bootxbmc.sh:sh /data/hack/bootxbmc.sh:' /data/hack/boot.sh")
         common.file_put_contents("/data/etc/.boot_to_xbmc_enabled", "1")
     common.set_string("boot-to-xbmc", bootenabled)
 
