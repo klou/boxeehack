@@ -30,6 +30,9 @@ plugins = BierDopje,OpenSubtitles,Subtitulos,SubsWiki,Addic7ed,Undertexter
 [BierDopje]
 key = C2FAFCBE34610608
 """)
+
+    if not os.path.exists("/data/etc/.boot_to_xbmc"):
+        common.file_put_contents("/data/etc/.boot_to_xbmc", "0")
     
     set_home_enabled_strings()
 
@@ -423,12 +426,13 @@ def get_xbmc_found():
     
 # Reads /data/hack/boot.sh to see if the checkxbmc.sh line is commented out
 def get_boot_to_xbmc_enabled():
-    bootscript = common.file_get_contents('/data/hack/boot.sh')
-    if '#sh /data/hack/bootxbmc.sh &' in bootscript:
-        bootenabled = "0"
-    else:
-        bootenabled = "1"
-    common.set_string("boot-to-xbmc", bootenabled)
+#    bootscript = common.file_get_contents('/data/hack/boot.sh')
+#    if '#sh /data/hack/bootxbmc.sh &' in bootscript:
+#        bootenabled = "0"
+#    else:
+#        bootenabled = "1"
+#    common.set_string("boot-to-xbmc", bootenabled)
+    bootenabled = common.file_get_contents('/data/etc/.boot_to_xbmc')
     return bootenabled
 
 # Changes /data/hack/boot.sh to enable or disable checkxbmc.sh	
@@ -436,10 +440,12 @@ def toggle_boot_to_xbmc():
     bootenabled = get_boot_to_xbmc_enabled()		
     if bootenabled == "1":
         bootenabled = "0"
-        os.system("sed -i 's:sh /data/hack/bootxbmc.sh:#sh /data/hack/bootxbmc.sh:' /data/hack/boot.sh")
+#        os.system("sed -i 's:sh /data/hack/bootxbmc.sh:#sh /data/hack/bootxbmc.sh:' /data/hack/boot.sh")
+        common.file_put_contents("/data/etc/.boot_to_xbmc", "0")
     else:
         bootenabled = "1"
-        os.system("sed -i 's:#sh /data/hack/bootxbmc.sh:sh /data/hack/bootxbmc.sh:' /data/hack/boot.sh")
+#        os.system("sed -i 's:#sh /data/hack/bootxbmc.sh:sh /data/hack/bootxbmc.sh:' /data/hack/boot.sh")
+        common.file_put_contents("/data/etc/.boot_to_xbmc", "1")
     common.set_string("boot-to-xbmc", bootenabled)
 
 # Displays README-style instructions
