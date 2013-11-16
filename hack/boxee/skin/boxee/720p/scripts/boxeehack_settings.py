@@ -16,7 +16,10 @@ def register_defaults():
     common.set_string("featured-feed", get_featured_feed() )
     common.set_string("featured-name", get_featured_name() )
     common.set_string("browser-homepage", "".join(get_browser_homepage().split("http://")) )
-
+    
+    common.set_string("boot-to-xbmc", get_boot_to_xbmc_enabled() )
+    common.set_string("xbmc-found", get_xbmc_found() )
+    
     if not os.path.exists("/data/etc/.subtitles"):
         common.file_put_contents("/data/etc/.subtitles", """[DEFAULT]
 lang = All
@@ -27,6 +30,9 @@ plugins = BierDopje,OpenSubtitles,Subtitulos,SubsWiki,Addic7ed,Undertexter
 [BierDopje]
 key = C2FAFCBE34610608
 """)
+
+    if not os.path.exists("/data/etc/.boot_to_xbmc_enabled"):
+        common.file_put_contents("/data/etc/.boot_to_xbmc_enabled", "0")
     
     set_home_enabled_strings()
 
@@ -408,6 +414,37 @@ def check_new_version():
 def shutdown():
     os.system("poweroff")
 
+# Calls XBMC Launch script
+def launch_xbmc():
+    dialog = xbmcgui.Dialog()
+    if dialog.yesno("Launch XBMC", "This will exit Boxee and launch XBMC.  Continue?"):
+        os.system("touch /data/etc/.launch_xbmc")
+
+def get_xbmc_found():
+    found = common.file_get_contents('/data/etc/.xbmc_found')
+    return found
+    
+# Reads /data/hack/boot.sh to see if the checkxbmc.sh line is commented out
+def get_boot_to_xbmc_enabled():
+    bootenabled = common.file_get_contents('/data/etc/.boot_to_xbmc_enabled')
+    return bootenabled
+
+# Changes /data/hack/boot.sh to enable or disable checkxbmc.sh	
+def toggle_boot_to_xbmc():
+    bootenabled = get_boot_to_xbmc_enabled()		
+    if bootenabled == "1":
+        bootenabled = "0"
+        common.file_put_contents("/data/etc/.boot_to_xbmc_enabled", "0")
+    else:
+        bootenabled = "1"
+        common.file_put_contents("/data/etc/.boot_to_xbmc_enabled", "1")
+    common.set_string("boot-to-xbmc", bootenabled)
+
+# Displays README-style instructions
+def display_xbmc_notes():
+    dialog = xbmcgui.Dialog()
+    dialog.ok("XBMC Exit Button", "The Exit button in the power options will disable the XBMC auto-boot and then reboot into Boxee.")
+
 if (__name__ == "__main__"):
     command = sys.argv[1]
 
@@ -427,4 +464,8 @@ if (__name__ == "__main__"):
     if command == "browser-homepage": set_browser_homepage()
     if command == "toggle-jump-to-last-unwatched": toggle_jump_to_last_unwatched()
 
+    if command == "toggle-boot-to-xbmc": toggle_boot_to_xbmc()
+    if command == "launch-xbmc": launch_xbmc()
+    if command == "display-xbmc-notes": display_xbmc_notes()
+	
     if command == "shutdown": shutdown()

@@ -11,6 +11,8 @@
 	<onunload>Control.SetFocus(11)</onunload>
 	<onunload>Control.SetFocus(10)</onunload>
 	<onunload>Control.SetFocus(1)</onunload>
+	<onunload>Control.SetFocus(502)</onunload>
+	<onunload>Control.SetFocus(501)</onunload>
 	<defaultcontrol>1</defaultcontrol>
 	<allowoverlay>no</allowoverlay>
 	
@@ -66,6 +68,15 @@
 					<onclick>SetFocus(301)</onclick>
 					<onclick>SetFocus(302)</onclick>
 					<label>Tools</label>
+				</control>
+				<control type="togglebutton" id="500">
+					<include>SettingsCategoryToggleButton</include>
+					<onright>SetFocus(501)</onright>
+					<usealttexture>ControlGroup(501).HasFocus()</usealttexture>
+					<onclick>SetFocus(501)</onclick>
+					<onclick>SetFocus(502)</onclick>
+					<label>XBMC</label>
+<!--					<visible>StringCompare(Skin.String(xbmc-found),1)</visible> -->
 				</control>
 				<control type="togglebutton" id="400">
 					<include>SettingsCategoryToggleButton</include>
@@ -549,6 +560,29 @@
 				</control>
 			</control>
 			
+			<!-- XBMC -->
+			<control type="grouplist" id="501">
+				<include>SettingsCategoryArea</include>
+				<visible>ControlGroup(501).HasFocus() | Control.HasFocus(500)</visible>
+				<control type="button" id="502">
+					<include>SettingsButton</include>
+					<label>Launch XBMC...</label>
+					<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "launch-xbmc")</onclick>
+					<visible>StringCompare(Skin.String(xbmc-found),1)</visible>
+				</control>
+				<control type="radiobutton" id="503">
+					<include>SettingsRadioButton</include>
+					<label>Enable Boot to XBMC</label>
+					<selected>StringCompare(Skin.String(boot-to-xbmc),1)</selected>
+					<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "toggle-boot-to-xbmc")</onclick>
+				</control>
+				<control type="button" id="504">
+					<include>SettingsButton</include>
+					<label>Display XBMC Boot README...</label>
+					<onclick>XBMC.RunScript("special://skin/720p/scripts/boxeehack_settings.py", "display-xbmc-notes")</onclick>
+				</control>
+			</control>
+			
 			<!-- ABOUT -->
 			<control type="group" id="401">
 				<include>SettingsCategoryArea</include>
@@ -586,6 +620,10 @@
 					<control type="label">
 						<include>SettingsLabelEntry</include>
 						<label>Winedog</label>
+					</control>
+					<control type="label">
+						<include>SettingsLabelEntry</include>
+						<label>Kruce</label>
 					</control>
 				</control>
 				<control type="grouplist">

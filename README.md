@@ -30,6 +30,8 @@ What does it do?
   - Reboot option
   - No more forced updates
   - Check for new versions
+  - Boot to XBMC (if present)
+  - Launch XBMC (if present) from Boxee
 
 Requirements
 ------------

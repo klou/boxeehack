@@ -1,6 +1,6 @@
 #!/bin/sh
 while true
-do
+do	
 	for m in /tmp/mnt/*; do
         if [ -f ${m}/xbmc.bin ] || [ -f ${m}/xbmc/xbmc.bin ]; then
 			# If XBMC is in a folder called xbmc instead of the root
@@ -16,8 +16,11 @@ do
 		fi
 	done
 	case "${ret}" in
-		0 ) # Quit
-			 ;;
+		0 ) # Quit (Reboot to Boxee until we figure out how to re-launch Boxee)
+			rm /data/etc/.boot_to_xbmc_enabled
+			reboot
+			break 2
+			;;
 		64 ) # Shutdown System
 			poweroff
 			break 2 
