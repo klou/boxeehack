@@ -1,6 +1,6 @@
 #!/bin/sh
-while true
-do	
+#while true
+#do	
 	for m in /tmp/mnt/*; do
         if [ -f ${m}/xbmc.bin ] || [ -f ${m}/xbmc/xbmc.bin ]; then
 			# If XBMC is in a folder called xbmc instead of the root
@@ -16,14 +16,7 @@ do
 		fi
 	done
 	case "${ret}" in
-		0 ) # Quit XBMC (and launch Boxee)
-			# Launch Boxee
-			cd /data
-			HOME=/data /etc/init.d/boxeehal restart
-			HOME=/data /etc/init.d/boxee restart
-			# Launch XBMC sleeper/listener
-			#/data/hack/checkxbmc.sh &
-			break
+		0 ) # Quit XBMC (and return to checkxbmc.sh)
 			;;
 		64 ) # Shutdown System
 			poweroff
@@ -41,5 +34,5 @@ do
 			;;
 		* ) ;;
 	esac
-done
+#done
 
