@@ -16,10 +16,14 @@ do
 		fi
 	done
 	case "${ret}" in
-		0 ) # Quit (Reboot to Boxee until we figure out how to re-launch Boxee)
-			rm /data/etc/.boot_to_xbmc_enabled
-			reboot
-			break 2
+		0 ) # Quit XBMC (and launch Boxee)
+			# Launch Boxee
+			cd /data
+			HOME=/data /etc/init.d/boxeehal restart
+			HOME=/data /etc/init.d/boxee restart
+			# Launch XBMC sleeper/listener
+			#/data/hack/checkxbmc.sh &
+			break
 			;;
 		64 ) # Shutdown System
 			poweroff

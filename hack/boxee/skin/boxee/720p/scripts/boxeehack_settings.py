@@ -442,7 +442,7 @@ def toggle_boot_to_xbmc():
 # Displays README-style instructions
 def display_xbmc_notes():
     dialog = xbmcgui.Dialog()
-    dialog.ok("XBMC Exit Button", "The Exit button in the power options will disable the XBMC auto-boot and then reboot into Boxee.")
+    dialog.ok("XBMC Exit Button", "The Exit button in the power options will relaunch Boxee.")
 
 if (__name__ == "__main__"):
     command = sys.argv[1]
