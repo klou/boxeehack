@@ -9,7 +9,7 @@ FOUND=/data/etc/.xbmc_found
 
 echo -n '0' > $FOUND
 
-if [ -e $LAUNCHXBMC | -e $LAUNCHBOXEE ]
+if [ -e $LAUNCHXBMC -o -e $LAUNCHBOXEE ]
 then
 	rm $LAUNCHXBMC
 	rm $LAUNCHBOXEE
@@ -21,7 +21,7 @@ for m in /tmp/mnt/*; do
 		while true
 		do	
 			# Sleep until LAUNCH exists
-			while [ ! -e $LAUNCHXBMC || ! -e $LAUNCHBOXEE ]
+			while [ ! -e $LAUNCHXBMC -a ! -e $LAUNCHBOXEE ]
 			do
 				sleep 5
 			done
@@ -40,11 +40,15 @@ for m in /tmp/mnt/*; do
 				
 				# Reset flag
 				rm $LAUNCHXBMC
+			
 			else # [ -e $LAUNCHBOXEE ] # Launch Boxee
 				export HOME=/data
 				cd $HOME
 				/etc/init.d/boxeehal start
 				/etc/init.d/boxee start
+				
+				# Reset flag
+				rm $LAUNCHBOXEE
 			fi
 			# Loop	
 		done
